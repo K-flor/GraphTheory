@@ -1,32 +1,26 @@
-package coloring;
-
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
-
 import org.apache.commons.lang3.ArrayUtils;
-
-import sojung2021.BasicTools;
-import sojung2021.GraphReader;
 
 /**
  * 
- *	Dsatur´Â ÀÏ¹İ coloring¿¡ »ç¿ëÇÏ´Â ¾Ë°í¸®ÁòÀÌ´Ù.
- *  saturation degree¸¦ ±âÁØÀ¸·Î ´ÙÀ½À¸·Î »öÄ¥ÇÒ Á¤Á¡À» ¼±ÅÃÇÏ´Â ¾Ë°í¸®ÁòÀÌ´Ù.
- *  »öÄ¥ÇÑ Á¤Á¡ÀÌ ¼±ÅÃµÇ¸é first-fitÀ» »ç¿ëÇØ¼­ coloringÀ» ¼öÇàÇÑ´Ù.
+ *	DsaturëŠ” ì¼ë°˜ coloringì— ì‚¬ìš©í•˜ëŠ” ì•Œê³ ë¦¬ì¦˜ì´ë‹¤.
+ *  saturation degreeë¥¼ ê¸°ì¤€ìœ¼ë¡œ ë‹¤ìŒìœ¼ë¡œ ìƒ‰ì¹ í•  ì •ì ì„ ì„ íƒí•˜ëŠ” ì•Œê³ ë¦¬ì¦˜ì´ë‹¤.
+ *  ìƒ‰ì¹ í•œ ì •ì ì´ ì„ íƒë˜ë©´ first-fitì„ ì‚¬ìš©í•´ì„œ coloringì„ ìˆ˜í–‰í•œë‹¤.
  *  
  *  saturation degree, sat(v) = the number of different colours assigned to adjacent vertices.
- *  ---> ÀÌ Å¬·¡½ºÀÇ dsat ÇÔ¼ö¿¡ ±¸ÇöÇÔ.
- *  ---> JgraphTÀÇ saturationDegreeColoringÀÌ dsatur¸¦ ±¸ÇöÇÑ°Í.
+ *  ---> ì´ í´ë˜ìŠ¤ì˜ dsat í•¨ìˆ˜ì— êµ¬í˜„í•¨.
+ *  ---> JgraphTì˜ saturationDegreeColoringì´ dsaturë¥¼ êµ¬í˜„í•œê²ƒ.
  *  
  * 
- * 	ÀÌÁ¦ L(2,1)-coloring ¿ëÀ¸·Î ÀÌ ¾Ë°í¸®ÁòÀ» º¯Çüº¸·ÁÇÑ´Ù.
- * 	¿ì¼±Àº °£´ÜÇÏ°Ô saturation degreeÀÇ Á¤ÀÇ¸¦ L(2,1)¿ëÀ¸·Î º¯°æÇÑ´Ù.
+ * 	ì´ì œ L(2,1)-coloring ìš©ìœ¼ë¡œ ì´ ì•Œê³ ë¦¬ì¦˜ì„ ë³€í˜•ë³´ë ¤í•œë‹¤.
+ * 	ìš°ì„ ì€ ê°„ë‹¨í•˜ê²Œ saturation degreeì˜ ì •ì˜ë¥¼ L(2,1)ìš©ìœ¼ë¡œ ë³€ê²½í•œë‹¤.
  * 	saturation degress for L(2,1) , sat2,1(v) = the number of different colours assigned to N(v) and N(N(v))
  * 
  * 
- * 		<Âü°í> color ½ÃÀÛÀº 0 ºÎÅÍ
+ * 		<ì°¸ê³ > color ì‹œì‘ì€ 0 ë¶€í„°
  * */
 public class Dsatur {
 	
@@ -75,7 +69,7 @@ public class Dsatur {
 		System.out.println("max of color = "+ BasicTools.maxValue(colors));
 	}
 	
-	// L(2,1)-coloring¿¡ ¸Â°Ô ¼³Á¤.
+	// L(2,1)-coloringì— ë§ê²Œ ì„¤ì •.
 	public static int chooseColor(byte[][] adj, int[] colors, Vertex v) {
 		byte[][] adj2 = BasicTools.matrixMul(adj, adj);
 		
@@ -83,7 +77,7 @@ public class Dsatur {
 		
 		int vid = v.v;
 		Set<Integer> usedColor = new HashSet<>();
-		// °Å¸®°¡ 2ÀÎ Á¤Á¡µéÀÇ »ö 
+		// ê±°ë¦¬ê°€ 2ì¸ ì •ì ë“¤ì˜ ìƒ‰ 
 		for(int i=0, l=adj2[vid].length; i<l; i++ ) {
 			if( adj2[vid][i] != 0 && colors[i] != -1 )
 				usedColor.add(colors[i]);
@@ -109,7 +103,7 @@ public class Dsatur {
 		return c;
 	}
 	
-	//al Áß °¡Àå Å« dsatÀ» °¡Áö´Â Á¤Á¡(µé) ArrayList¿¡ ÀúÀåÇØ¼­ return
+	//al ì¤‘ ê°€ì¥ í° dsatì„ ê°€ì§€ëŠ” ì •ì (ë“¤) ArrayListì— ì €ì¥í•´ì„œ return
 	public static ArrayList<Vertex> maximalDsat(ArrayList<Vertex> al) {
 		int max = -1;
 		ArrayList<Vertex> mdsat = new ArrayList<>();
@@ -130,7 +124,7 @@ public class Dsatur {
 		return mdsat;
 	}
 	
-	// al Áß degree°¡ °¡ÀåÅ« Á¤Á¡(µé) ArrayList¿¡ ÀúÀåÇØ¼­ return
+	// al ì¤‘ degreeê°€ ê°€ì¥í° ì •ì (ë“¤) ArrayListì— ì €ì¥í•´ì„œ return
 	public static ArrayList<Vertex> maximalDegree(ArrayList<Vertex> al){
 		ArrayList<Vertex> maxDeg = new ArrayList<>();
 		int max = 0;
@@ -227,7 +221,7 @@ public class Dsatur {
 	}
 	
 	
-	// Q1. ¼º´ÉÀ» ºñ±³ÇÒ ¸¸ÇÑ ³í¹®À» Ã£Áö ¸øÇÔ..!
+	// Q1. ì„±ëŠ¥ì„ ë¹„êµí•  ë§Œí•œ ë…¼ë¬¸ì„ ì°¾ì§€ ëª»í•¨..!
 	public static void main(String[] args) throws IOException {
 		//String s = "D:\\Data\\DIMACS\\MY\\mGraph3.txt";
 		String s = "D:\\Data\\DIMACS\\dia2\\C125.9.clq";
